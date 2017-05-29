@@ -1,0 +1,118 @@
+<body>
+
+<head>
+	<title>Testable Code for Unit Tests</title>
+	<style>
+	body {
+		font-family: Arial, sans-serif;
+	}
+	</style>
+</head>
+<body>
+
+<h1>Testable Code for Unit Tests</h1>
+
+<p>&copy; 2017 Adrian Herzog</p>
+
+<h2>TL;DR</h2>
+
+<p>In order to make hard to test code more testable, I would try to extract <strong>logic code</strong> into <strong>pure functions</strong> which makes them <strong>easy to test</strong>. What is left is mostly <strong>glue code</strong> or <strong>orchestration code</strong> that can then be tested independently from the complicated logic, either also on unit test level or even on higher test levels (API Tests, System Tests, etc.).</p>
+
+<h2>An All Too Common Question</h2>
+
+<p>Sooner or later in your coding career you will probably ask yourself this question:</p>
+
+<blockquote><p>How shall I unit test a private method of a class without the overhead the entire class brings with it?</p></blockquote>
+
+<p>Take the following class as an example. What we want to test is the logic in <code>calculateAcountBalance()</code>, but this method is private.</p>
+
+<pre><code>class AccountBalanceCalculator() {
+
+    // Dependencies on class level need to be set up for unit test
+    public AccountBalanceCalculator(WebService transactionsWebService, DatabaseAccess databaseAccess) {
+        ...
+    }
+
+    public calculateAccountBalanceForEachCustomer(CustomerId customerIds) {
+        // DB access, probably needs to be mocked away in unit test
+        var customers = loadCustomers(customerIds);
+
+        foreach(customer in customers) {
+            calculateAccountBalanceForSingleCustomer(customer);
+        }
+
+        updateAccountBalanceInDatabase(customers);
+    }
+
+    private void calculateAccountBalanceForSingleCustomer(Customer customer) {
+        // WebService call, probably needs to be mocked away in unit test
+        var recentTransactions = loadRecentTransactions(customer);
+
+        var accountBalance = calculateAccountBalance(customer, recentTransactions);
+    }
+
+    private void calculateAcountBalance(Customer customer, List&lt;Transaction&gt; recentTransactions) {
+        var newBalance = customer.balance;
+        foreach(transaction in recentTransactions) {
+            newBalance = doSomeFancyCalculations();
+        }
+        // Note that this is a side effect, i.e. an input variable is modified,
+        // so the unit test has to assert the modification on the input variable.
+        customer.balance = newBalance;
+    }
+
+    private Balance = doSomeFancyCalculations(Transaction transaction) {
+        ...
+    }
+}</code></pre>
+
+<h2>What&#39;s The Problem?</h2>
+
+<p>When trying to create a unit test for the method <code>calculateAcountBalance()</code> I face some problems, e.g.:</p>
+
+<ul><li>I have to create an instance of the entire <code>AccountBalanceCalculator</code> class, which means I also have to supply <code>transactionsWebService</code> and <code>databaseAccess</code>. What&#39;s the big deal? Well, either I use the same classes for these parameters that the real system would use, but then I might end up setting up endless dependencies for these classes. Or I could mock the two dependencies, which is some additional work, considering that the two dependencies are not even used by the method I want to test.</li><li>I have to call <code>calculateAccountBalanceForEachCustomer()</code> in order to test <code>calculateAcountBalance()</code>, which results in a Web Service and a Database Call being made. This means that in order to control my input data to the method, I have to set up the test data in these two dependencies correctly (no matter whether they are mocked or not).</li><li>The result of the calculation is not returned by <code>calculateAccountBalanceForEachCustomer()</code>. The only way to assert the result is through the (mocked or not) database.</li></ul>
+
+<p>So we can say that <code>calculateAcountBalance()</code> is not unit testable without major effort. This has serious consequences, some of which could be:</p>
+
+<ul><li>A programmer might start writing a test and finally give up because setting everything up does not seem worth the effort.</li><li>There might be a few tests, but as the test code is mainly concerned with setting everything up, the actual test intention is barely visible and hard to understand.</li><li>If something changes with database or web service access then the unit tests might break and needs to be fixed, even though the calculation logic that is tested did not change.</li></ul>
+
+<h2>How Can I Solve This?</h2>
+
+<p>There&#39;s no single true answer.</p>
+
+<p>Some people suggest making the method <code>calculateAcountBalance()</code> <em>public</em>. Object Oriented purists might find this blasphemy. I think it&#39;s not a bad idea, as a lot of today&#39;s code is not really Object Oriented anyway. Nevertheless, I would still not do it and go for another option, as just making the method <em>public</em> does not solve all the problems there are in the above example.</p>
+
+<p>Some languages even allow, that a method is accessible for <em>test code</em>, but not for the other <em>normal code</em>. This is more or less the same as making it <em>public</em>, so I would not recommend it either.</p>
+
+<p>Instead I would suggest to refactor the code to improve testability in the following way:</p>
+
+<ul><li>Extract the logic you want to test into it&#39;s own unit with only a single function. In some languages this is a class with just one public function.</li><li>This function should be <em>pure functional</em>, i.e. it should receive all input as parameters and return all output. Input parameters must not be modified by the function. The function must not have any side effects, i.e. must not modify the database. Reading input from other sources (e.g. from a web service) is not allowed.</li></ul>
+
+<p>For the above example, the logic class would look like this:</p>
+
+<pre><code>class AccountBalanceCalculatorLogic() {
+
+    public static Map&lt;Customer, Balance&gt; calculateAcountBalance(Customer customer, List&lt;Transaction&gt; recentTransactions) {
+        var newBalance = customer.balance;
+        foreach(transaction in recentTransactions) {
+            newBalance = doSomeFancyCalculations(transaction);
+        }
+        ...
+        return mapWithResultsPerCustomer;
+    }
+
+    private Balance = doSomeFancyCalculations(Transaction transaction) {
+        ...
+    }
+
+}</code></pre>
+
+<p>Note that:</p>
+
+<ul><li>The old <code>AccountBalanceCalculator</code> class still contains the database access and web service code but now uses the <code>AccountBalanceCalculatorLogic</code> class to do the complicated calculations.</li><li>The new method <code>calculateAcountBalance()</code> is now <code>public static</code> and returns the result instead of modifying the input values.</li><li>The method does not access any database or web service as this was done by the method <code>calculateAccountBalanceForEachCustomer()</code>.</li></ul>
+
+<p><strong>In other words: it is now super easy to write unit tests for this logic class.</strong></p>
+
+<p>And if we want to write a test for <code>AccountBalanceCalculator</code>, we can ignore the entire calculation logic and focus on testing that kind of <em>glue code</em> that pulls data from different sources and stores something in the end. Instead of many different test cases, it&#39;s probably enough to have one or two cases for <code>AccountBalanceCalculator</code>. These tests can even be on higher levels than unit test level, e.g. on API or System Test level. The many different combinations of the logic will then be covered by the test class for <code>AccountBalanceCalculatorLogic</code>.</p>
+
+</body>
