@@ -15,9 +15,23 @@
 
 	<p><i>Inspiration for Jam Sessions</i></p>
 
+	<p><input type="checkbox" id="open-in-new-tab">Open links in new tab</input></p>
+
 	<div id="songs"></div>
 
 <script type="text/javascript">
+
+var openInNewTab = false;
+
+openInNewTabCheckbox = document.getElementById('open-in-new-tab');
+openInNewTabCheckbox.addEventListener(
+     'change',
+     function() {
+		 openInNewTab = !openInNewTab;
+		 refreshList();
+	 },
+     false
+  );
 
 var songs = [
 	{
@@ -291,43 +305,43 @@ var songs = [
 	},
 	{
 		title: 'Mad World',
-		artist: ''
+		artist: 'Tears for Fears '
 	},
 	{
 		title: 'Venus',
-		artist: ''
+		artist: 'Shocking Blue'
 	},
 	{
 		title: 'Read all about you',
-		artist: ''
+		artist: 'Emeli Sandé'
 	},
 	{
-		title: '',
+		title: 'Stolen dance',
 		artist: 'Milky chance'
 	},
 	{
 		title: 'Mamboleo',
-		artist: ''
+		artist: 'Loona'
 	},
 	{
-		title: 'Rolling on the river',
-		artist: ''
+		title: 'Proud Mary',
+		artist: 'Creedence Clearwater Revival'
 	},
 	{
 		title: 'House of the rising sun',
-		artist: ''
+		artist: 'Animals'
 	},
 	{
 		title: 'Karla with a K',
-		artist: ''
+		artist: 'The Hooters'
 	},
 	{
 		title: 'Wind of change',
-		artist: ''
+		artist: 'Scorpions'
 	},
 	{
 		title: 'Say nothing at all',
-		artist: ''
+		artist: 'Ronan Keating'
 	},
 	{
 		title: 'Tom Dooley',
@@ -335,7 +349,7 @@ var songs = [
 	},
 	{
 		title: 'Mighty Quinn',
-		artist: ''
+		artist: 'Manfred Mann'
 	},
 	{
 		title: 'Love me do',
@@ -377,41 +391,152 @@ var songs = [
 		artist: 'Extreme'
 	},
 	{
-		title: '',
+		title: 'Schwan',
+		artist: 'Gölä'
+	},
+	{
+		title: 'Büezer',
+		artist: 'Gölä'
+	},
+	{
+		title: 'Indianer',
+		artist: 'Gölä'
+	},
+	{
+		title: 'W.Nuss vo Bümpliz',
+		artist: 'Patent Ochsner'
+	},
+	{
+		title: 'Streets of London',
+		artist: 'Ralph Mc Tell'
+	},
+	{
+		title: '99 Luftbalons',
+		artist: 'Nena'
+	},
+	{
+		title: 'Hotel California',
+		artist: 'Eagles'
+	},
+	{
+		title: 'What a wonderful world',
+		artist: 'Louis Armstrong'
+	},
+	{
+		title: 'Alles nur geklaut',
+		artist: 'Die Prinzen'
+	},
+	{
+		title: 'Bad moon rising',
+		artist: 'CCR'
+	},
+	{
+		title: 'Down on the corner',
+		artist: 'CCR'
+	},
+	{
+		title: 'Hey Jude',
+		artist: 'The Beatles'
+	},
+	{
+		title: 'Let it be',
+		artist: 'The Beatles'
+	},
+	{
+		title: 'Yesterday',
+		artist: 'The Beatles'
+	},
+	{
+		title: 'Blue Suede Shoes',
+		artist: 'Carl Perkins'
+	},
+	{
+		title: 'Lola',
+		artist: 'The Kinks'
+	},
+	{
+		title: 'Hit the Road Jack',
+		artist: 'Ray Charles'
+	},
+	{
+		title: 'Yellow Submarine',
+		artist: 'The Beatles'
+	},
+	{
+		title: 'Marmor Stein und Eisen bricht',
+		artist: 'Drafi Deutscher'
+	},
+	{
+		title: 'Lady in Black',
+		artist: 'Uriah Heep'
+	},
+	{
+		title: 'Es gibt kein Bier auf Hawaii',
+		artist: 'Paul Kuhn'
+	},
+	{
+		title: 'What shall we do with the drunken sailor?',
 		artist: ''
 	},
 	{
-		title: '',
-		artist: ''
+		title: 'Blowing in the wind',
+		artist: 'Bob Dylan'
 	},
 	{
-		title: '',
-		artist: ''
+		title: 'I will survive',
+		artist: 'Gloria Gaynor'
 	},
 	{
-		title: '',
-		artist: ''
+		title: 'Aber bitte mit Sahne',
+		artist: 'Udo Jürgens'
+	},
+	{
+		title: 'Another Brick in the wall',
+		artist: 'Pink Floyd'
+	},
+	{
+		title: 'Stand by me',
+		artist: 'Ben E King'
+	},
+	{
+		title: 'Johnny B',
+		artist: 'The Hooters'
 	}
 ]
 
-var songsDomElement = document.getElementById('songs');
+refreshList();
 
-songs.forEach(function(song) {
-	var songElement = document.createElement('div');
-	var content = '<p>' + song.title;
-	if (song.artist) {
-		content += ' - ' + song.artist
-	}
-	if (song.youtube) {
-		content += ' - <a href="' + song.youtube + '" target="_blank">YouTube</a>';
-	}
-	if (song.lyrics) {
-		content += ' - <a href="' + song.lyrics + '" target="_blank">Lyrics</a>';
-	}
-	content += '</p>';
-	songElement.innerHTML = content;
-	songsDomElement.appendChild(songElement);
-});
+function refreshList() {
+	var songsDomElement = document.getElementById('songs');
+	songsDomElement.innerHTML = '';
+
+
+	console.log(openInNewTab);
+	
+	var target = openInNewTab ? ' target="_blank"' : '';
+
+	songs.forEach(function(song) {
+		var songElement = document.createElement('div');
+		var content = '<p>' + song.title;
+		if (song.artist) {
+			content += ' - ' + song.artist
+		}
+		if (song.youtube) {
+			content += ' - <a href="' + song.youtube + '"' + target + '>YouTube</a>';
+		} else {
+			content += ' - <a href="https://www.youtube.com/results?search_query=' + song.artist + ' ' + song.title + '"' + target + '>YouTube</a>';
+		}
+		if (song.lyrics) {
+			content += ' - <a href="' + song.lyrics + '"' + target + '>Lyrics</a>';
+		} else {
+			content += ' - <a href="http://www.songtexte.com/search?q=' + song.artist + ' ' + song.title + '&c=all"' + target + '>Lyrics</a>';
+		}
+		content += ' - <a href="https://www.ultimate-guitar.com/search.php?search_type=title&order=&value=' + song.artist + ' ' + song.title + '"' + target + '>Tabs</a>';
+		content += '</p>';
+		songElement.innerHTML = content;
+		songsDomElement.appendChild(songElement);
+	});
+}
 
 </script>
 
