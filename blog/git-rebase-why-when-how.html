@@ -1,0 +1,41 @@
+<body>
+
+<head>
+	<title>Git Rebase - Why, When and How?</title>
+	<style>
+	body {
+		font-family: Arial, sans-serif;
+	}
+	</style>
+</head>
+<body>
+    
+<h1>Git Rebase - Why, When and How?</h1>
+
+<p>&copy; 2017 Adrian Herzog</p>
+
+<p>Understanding the many features of Git is hard. I only know a small part of it well that I use on a daily basis. As this <a href="http://static.googleusercontent.com/media/research.google.com/de//pubs/archive/42942.pdf">paper</a> suggests, this is true for many programmers.</p>
+
+<p>That&#39;s why it took me a long time to start using rebase. Now that I use it to integrate changes into my own branches, I am a big fan of it and would like to spread the word.</p>
+
+<h1>Why?</h1>
+
+<p>The main reason I see for using rebase is to keep the Git history clean and linear on the main branch. Developers often want to (and should) integrate changes from the main branch into their feature branches. When using merge for this, this generates a merge commit each time which later pollutes the history after the feature is merged back to the main branch.</p>
+
+<p>Another reason is to clean up commit messages or to combine some commits using interactive rebase.</p>
+
+<h1>When?</h1>
+
+<p>The most important rules, when to do it and when to leave it:</p>
+
+<ul><li>The golden rule of git rebase: never use it on public branches</li><li>If you don&#39;t know exactly what you&#39;re doing, use &quot;merge&quot; and live with a history that has a few merge commits more than necessary.</li><li>If you know what you&#39;re doing, use it to get a cleaner history where it makes sense:<ul><li>Clean up local commits or private feature branches</li><li>Integrate upstream changes into private feature branches</li><li>Clean up history of an accepted pull request</li></ul></li></ul>
+
+<p>If you have time for some more details, I can recommend these two articles by Atlassian:</p>
+
+<ul><li><a href="https://www.atlassian.com/git/articles/git-team-workflows-merge-or-rebase/">Git team workflows: merge or rebase?</a></li><li><a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough">Merging vs. Rebasing</a></li></ul>
+
+<h1>How?</h1>
+
+<p><a href="https://nathanleclaire.com/blog/2014/09/14/dont-be-scared-of-git-rebase/">Nathan LeClaire explains it well</a>, so no need to repeat it.</p>
+
+</body>
