@@ -1,21 +1,47 @@
 <body>
-
 <head>
 	<title>Adrian Herzog - Songs</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	body {
 		font-family: Arial, sans-serif;
+		background-color: #e2e1e0;
+	}
+
+	input[type = checkbox] {
+		margin-left: 0;
+	}
+
+	#songs > div {
+		padding: 0.3em 0.5em 0.3em 0.5em;
+		margin: 0.5em 0 0.5em 0;
+		line-height: 1.5em;
+		border-radius: 3px;
+		background-color: #FFF;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	}
+
+	#songs > div > p {
+		margin: 0;
+	}
+
+	.copyright {
+		font-size: 0.8em;
 	}
 	</style>
-
 </head>
 <body>
 
     <h1>Songs</h1>
 
-	<p><i>Inspiration for Jam Sessions</i></p>
+	<p class="copyright"><i>&copy; 2017 Adrian Herzog</i></p>
 
-	<p><input type="checkbox" id="open-in-new-tab">Open links in new tab</input></p>
+	<p>
+		<label>
+			<input type="checkbox" id="open-in-new-tab">Open links in new tab
+			</input>
+		</label>
+	</p>
 
 	<div id="songs"></div>
 
@@ -501,8 +527,71 @@ var songs = [
 	{
 		title: 'Johnny B',
 		artist: 'The Hooters'
+	},
+	{
+		title: 'The Wanderer',
+		artist: 'Status Quo'
+	},
+	{
+		title: 'Ds Hippigschpängschtli',
+		artist: 'Peter Reber',
+		lyrics: 'http://chinderliedli.ch/index.php/2010/08/29/374/'
+	},
+	{
+		title: 'Summer of 69',
+		artist: 'Bryan Adams'
+	},
+	{
+		title: 'I hätt no viu blöder ta',
+		artist: 'Gölä'
+	},
+	{
+		title: 'Uf u dervo',
+		artist: 'Gölä'
+	},
+	{
+		title: 'Bim Coiffeur',
+		artist: 'Mani Matter'
+	},
+	{
+		title: 'Dr Sidi Abdel Assar vo El Hama',
+		artist: 'Mani Matter'
+	},
+	{
+		title: 'The Joker',
+		artist: 'Steve Miller Band'
+	},
+	{
+		title: 'I want it all',
+		artist: 'Queen'
+	},
+	{
+		title: 'We will rock you',
+		artist: 'Queen'
+	},
+	{
+		title: 'Oh Happy Day',
+		artist: 'Edwin Hawkin Singers'
+	},
+	{
+		title: 'Whiskey in the Jar',
+		artist: 'The Dubliners'
+	},
+	{
+		title: 'Father and Son',
+		artist: 'Cat Stevens'
 	}
 ]
+
+songsSorted = songs.sort(function(a, b) {
+	if(a.title < b.title) {
+		return -1;
+	}
+	if(a.title > b.title) {
+		return 1;
+	}
+	return 0;
+});
 
 refreshList();
 
@@ -515,7 +604,7 @@ function refreshList() {
 	
 	var target = openInNewTab ? ' target="_blank"' : '';
 
-	songs.forEach(function(song) {
+	songsSorted.forEach(function(song) {
 		var songElement = document.createElement('div');
 		var content = '<p>' + song.title;
 		if (song.artist) {
