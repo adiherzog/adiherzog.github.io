@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: 0*/
 
-const songs = [
+const allSongs = [
     {
         title: 'Hemmige, Version Stephan Eicher',
         youtube: 'https://www.youtube.com/watch?v=mRorQAwS_74',
