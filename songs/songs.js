@@ -1,5 +1,6 @@
+/* eslint no-unused-vars: 0*/
 
-var songs = [
+const songs = [
     {
         title: 'Hemmige, Version Stephan Eicher',
         youtube: 'https://www.youtube.com/watch?v=mRorQAwS_74',
@@ -377,7 +378,7 @@ var songs = [
         artist: 'Ralph Mc Tell'
     },
     {
-        title: '99 Luftbalons',
+        title: '99 Luftballons',
         artist: 'Nena'
     },
     {

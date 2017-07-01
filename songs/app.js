@@ -1,9 +1,11 @@
+/* global songs */
+
 var openInNewTab = false;
 
 var openInNewTabCheckbox = document.getElementById('open-in-new-tab');
 openInNewTabCheckbox.addEventListener(
     'change',
-    function() {
+    function () {
         openInNewTab = !openInNewTab;
         refreshList();
     },
@@ -11,11 +13,11 @@ openInNewTabCheckbox.addEventListener(
 );
 
 
-var songsSorted = songs.sort(function(a, b) {
-    if(a.title < b.title) {
+var songsSorted = songs.sort(function (a, b) {
+    if (a.title < b.title) {
         return -1;
     }
-    if(a.title > b.title) {
+    if (a.title > b.title) {
         return 1;
     }
     return 0;
@@ -27,30 +29,40 @@ function refreshList() {
     var songsDomElement = document.getElementById('songs');
     songsDomElement.innerHTML = '';
 
-
-    console.log(openInNewTab);
-
-    var target = openInNewTab ? ' target="_blank"' : '';
-
-    songsSorted.forEach(function(song) {
+    songsSorted.forEach(function (song) {
         var songElement = document.createElement('div');
-        var content = '<p>' + song.title;
+        var content = `<p>${song.title}`;
         if (song.artist) {
-            content += ' - ' + song.artist
+            content += ' - ' + song.artist;
         }
         if (song.youtube) {
-            content += ' - <a href="' + song.youtube + '"' + target + '>YouTube</a>';
+            content += ` - ${createLink(song.youtube, 'YouTube', openInNewTab)}`;
         } else {
-            content += ' - <a href="https://www.youtube.com/results?search_query=' + song.artist + ' ' + song.title + '"' + target + '>YouTube</a>';
+            const youTubeSearchUrl = `https://www.youtube.com/results?search_query=${song.artist} ${song.title}`;
+            content += ` - ${createLink(youTubeSearchUrl, 'YouTube', openInNewTab)}`;
         }
         if (song.lyrics) {
-            content += ' - <a href="' + song.lyrics + '"' + target + '>Lyrics</a>';
+            content += ` - ${createLink(song.lyrics, 'Lyrics', openInNewTab)}`;
         } else {
-            content += ' - <a href="http://www.songtexte.com/search?q=' + song.artist + ' ' + song.title + '&c=all"' + target + '>Lyrics</a>';
+            const songtexteSearchUrl = `http://www.songtexte.com/search?q=${song.artist} ${song.title}&c=all`;
+            content += ` - ${createLink(songtexteSearchUrl, 'Lyrics', openInNewTab)}`;
         }
-        content += ' - <a href="https://www.ultimate-guitar.com/search.php?search_type=title&order=&value=' + song.artist + ' ' + song.title + '"' + target + '>Tabs</a>';
+        const tabsUrl = `https://www.ultimate-guitar.com/search.php?search_type=title&order=&value=${song.artist} ${song.title}`;
+        content += ` - ${createLink(tabsUrl, 'Tabs', openInNewTab)}`;
         content += '</p>';
         songElement.innerHTML = content;
         songsDomElement.appendChild(songElement);
     });
+}
+
+/**
+ *
+ * @param url
+ * @param text
+ * @param {boolean} openInNewTab
+ * @returns {string}
+ */
+function createLink(url, text, openInNewTab) {
+    var target = openInNewTab ? ' target="_blank"' : '';
+    return `<a href="${url}" ${target}>${text}</a>`;
 }
