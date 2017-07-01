@@ -2,6 +2,7 @@
 
 const allSongs = [
     {
+        artist: '',
         title: 'Hemmige, Version Stephan Eicher',
         youtube: 'https://www.youtube.com/watch?v=mRorQAwS_74',
         lyrics: 'https://tabs.ultimate-guitar.com/s/stephan_eicher/hemmige_crd.htm'

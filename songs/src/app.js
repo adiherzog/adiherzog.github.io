@@ -5,24 +5,62 @@ const state = {
     songs: allSongs.sort((a, b) => a.title.localeCompare(b.title))
 };
 
-
+const songList = document.getElementById('song-list');
 const openInNewTabCheckbox = document.getElementById('open-in-new-tab');
-openInNewTabCheckbox.addEventListener('change', () => {
-    state.openInNewTab = !state.openInNewTab;
-    render();
-}, false);
+openInNewTabCheckbox.addEventListener('change', onOpenInNewTabCheckboxChanged, false);
+
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('keyup', onSearch, false);
 
 
-render();
+render(state.songs, state.openInNewTab);
 
 /**
  *
  */
-function render() {
-    const songsDomElement = document.getElementById('songs');
-    const listFrag = renderList(state.songs, state.openInNewTab);
-    songsDomElement.innerHTML = '';
-    songsDomElement.appendChild(listFrag);
+function onSearch() {
+    const query = searchInput.value;
+    const filteredSongs = filterSongs(state.songs, query);
+    render(filteredSongs, state.openInNewTab);
+}
+
+/**
+ * @static
+ *
+ * @param allSongs
+ * @param query
+ * @returns {*}
+ */
+function filterSongs(allSongs, query) {
+    if (!query) {
+        return allSongs;
+    }
+    const lowerCaseQuery = query.toLowerCase();
+
+    return allSongs.filter((song) => (
+        song.artist.toLowerCase().includes(lowerCaseQuery)
+        || song.title.toLowerCase().includes(lowerCaseQuery)
+    ));
+}
+
+/**
+ *
+ */
+function onOpenInNewTabCheckboxChanged() {
+    searchInput.value = '';
+    state.openInNewTab = !state.openInNewTab;
+    render(state.songs, state.openInNewTab);
+}
+
+
+/**
+ * @param {object[]} songs
+ * @param {boolean} openInNewTab
+ */
+function render(songs, openInNewTab) {
+    const listFrag = renderList(songs, openInNewTab);
+    songList.innerHTML = '';
+    songList.appendChild(listFrag);
 }
 
 
