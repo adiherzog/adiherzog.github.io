@@ -1,8 +1,8 @@
 /* global songs */
 
-var openInNewTab = false;
+let openInNewTab = false;
 
-var openInNewTabCheckbox = document.getElementById('open-in-new-tab');
+const openInNewTabCheckbox = document.getElementById('open-in-new-tab');
 openInNewTabCheckbox.addEventListener(
     'change',
     function () {
@@ -13,7 +13,7 @@ openInNewTabCheckbox.addEventListener(
 );
 
 
-var songsSorted = songs.sort(function (a, b) {
+const songsSorted = songs.sort(function (a, b) {
     if (a.title < b.title) {
         return -1;
     }
@@ -26,12 +26,12 @@ var songsSorted = songs.sort(function (a, b) {
 refreshList();
 
 function refreshList() {
-    var songsDomElement = document.getElementById('songs');
+    const songsDomElement = document.getElementById('songs');
     songsDomElement.innerHTML = '';
 
     songsSorted.forEach(function (song) {
-        var songElement = document.createElement('div');
-        var content = `<p>${song.title}`;
+        const songElement = document.createElement('div');
+        let content = `<p>${song.title}`;
         if (song.artist) {
             content += ' - ' + song.artist;
         }
@@ -63,6 +63,6 @@ function refreshList() {
  * @returns {string}
  */
 function createLink(url, text, openInNewTab) {
-    var target = openInNewTab ? ' target="_blank"' : '';
+    const target = openInNewTab ? ' target="_blank"' : '';
     return `<a href="${url}" ${target}>${text}</a>`;
 }
