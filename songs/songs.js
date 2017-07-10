@@ -520,5 +520,25 @@ var songs = [
     {
         title: 'Father and Son',
         artist: 'Cat Stevens'
+    },
+    {
+        title: 'Keini Träne meh',
+        artist: 'Gölä'
+    },
+    {
+        title: 'Dust in the Wind',
+        artist: 'Kansas'
+    },
+    {
+        title: 'White Room',
+        artist: 'Cream'
+    },
+    {
+        title: 'Cats in the cradle',
+        artist: 'Ugly Kid Joe'
+    },
+    {
+        title: 'Wish you were here',
+        artist: 'Pink Floyd'
     }
 ];
