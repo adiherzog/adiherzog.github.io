@@ -7,6 +7,11 @@ input[type = checkbox] {
     margin-left: 0;
 }
 
+.search {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
 #song-list > div {
     padding: 0.3em 0.5em 0.3em 0.5em;
     margin: 0.5em 0 0.5em 0;
