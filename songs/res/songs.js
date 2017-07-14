@@ -178,11 +178,6 @@ const allSongs = [
         youtube: 'https://www.youtube.com/watch?v=Mc0ocjn2F_Y'
     },
     {
-        title: 'Talkin\' bout a Revolution',
-        artist: 'Tracy Chapman',
-        youtube: 'https://www.youtube.com/watch?v=Q2wneBVssPc'
-    },
-    {
         title: 'More Than Words',
         artist: 'Extreme',
         youtube: 'https://www.youtube.com/watch?v=UrIiLvg58SY'
