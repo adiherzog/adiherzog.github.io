@@ -8,15 +8,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/xeronimus/adiherzog.github.io.git"
+        "url": "git+https://github.com/adiherzog/adiherzog.github.io.git"
     },
     "keywords": [],
-    "author": "",
+    "author": "Adrian Herzog & Contributors",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/xeronimus/adiherzog.github.io/issues"
+        "url": "https://github.com/adiherzog/adiherzog.github.io/issues"
     },
-    "homepage": "https://github.com/xeronimus/adiherzog.github.io#readme",
+    "homepage": "https://adiherzog.github.io/songs/index.html",
     "devDependencies": {
         "eslint": "^4.1.1"
     }
