@@ -1,6 +1,8 @@
+/* eslint no-unused-vars: 0*/
 
-var songs = [
+const allSongs = [
     {
+        artist: '',
         title: 'Hemmige, Version Stephan Eicher',
         youtube: 'https://www.youtube.com/watch?v=mRorQAwS_74',
         lyrics: 'https://tabs.ultimate-guitar.com/s/stephan_eicher/hemmige_crd.htm'
@@ -174,11 +176,6 @@ var songs = [
         title: 'Toucher',
         artist: 'Züri West',
         youtube: 'https://www.youtube.com/watch?v=Mc0ocjn2F_Y'
-    },
-    {
-        title: 'Talkin\' bout a Revolution',
-        artist: 'Tracy Chapman',
-        youtube: 'https://www.youtube.com/watch?v=Q2wneBVssPc'
     },
     {
         title: 'More Than Words',
@@ -377,7 +374,7 @@ var songs = [
         artist: 'Ralph Mc Tell'
     },
     {
-        title: '99 Luftbalons',
+        title: '99 Luftballons',
         artist: 'Nena'
     },
     {

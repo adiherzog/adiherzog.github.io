@@ -6,7 +6,7 @@
     <title>Adrian Herzog - Songs</title>
     <meta name="description" content="Songs">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="songs.css">
+    <link rel="stylesheet" href="res/songs.css">
 </head>
 
 <body>
@@ -15,17 +15,21 @@
 
 <p class="copyright"><i>&copy; 2017 Adrian Herzog</i></p>
 
-<p>
+<div class="settings">
     <label>
         <input type="checkbox" id="open-in-new-tab">Open links in new tab
         </input>
     </label>
-</p>
+</div>
 
-<div id="songs"></div>
+<div class="search">
+    <input type="text" id="search-input" placeholder="Search..."/>
+</div>
 
-<script type="text/javascript" src="songs.js"></script>
+<div id="song-list"></div>
 
-<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="res/songs.js"></script>
+
+<script type="text/javascript" src="src/app.js"></script>
 
 </body>
