@@ -200,7 +200,9 @@ const allSongs = [
     {
         title: 'House of the Rising Sun',
         artist: 'Animals',
-        youtube: 'https://www.youtube.com/watch?v=5A-4VGfx5lU'
+        youtube: 'https://www.youtube.com/watch?v=5A-4VGfx5lU',
+        lyrics: 'http://www.songtexte.com/songtext/the-animals/house-of-the-rising-sun-5bd61b44.html',
+        tabs: 'https://tabs.ultimate-guitar.com/tab/the_animals/house_of_the_rising_sun_chords_763620'
     },
     {
         title: 'Hey There Delilah',
@@ -289,10 +291,6 @@ const allSongs = [
     {
         title: 'Proud Mary',
         artist: 'Creedence Clearwater Revival'
-    },
-    {
-        title: 'House of the rising sun',
-        artist: 'Animals'
     },
     {
         title: 'Karla with a K',

@@ -93,8 +93,12 @@ function renderList(songs, openInNewTab) {
             const songtexteSearchUrl = `http://www.songtexte.com/search?q=${song.artist} ${song.title}&c=all`;
             content += ` - ${createLink(songtexteSearchUrl, 'Lyrics', target)}`;
         }
-        const tabsUrl = `https://www.ultimate-guitar.com/search.php?search_type=title&order=&value=${song.artist} ${song.title}`;
-        content += ` - ${createLink(tabsUrl, 'Tabs', target)}`;
+        if (song.tabs) {
+            content += ` - ${createLink(song.tabs, 'Tabs', target)}`;
+        } else {
+            const tabsUrl = `https://www.ultimate-guitar.com/search.php?search_type=title&order=&value=${song.artist} ${song.title}`;
+            content += ` - ${createLink(tabsUrl, 'Tabs', target)}`;
+        }
         content += '</p>';
         songElement.innerHTML = content;
         frag.appendChild(songElement);
